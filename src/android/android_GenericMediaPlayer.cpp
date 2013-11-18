@@ -414,6 +414,9 @@ void GenericMediaPlayer::onSeek(const sp<AMessage> &msg) {
                 // FIXME simulate a MEDIA_SEEK_COMPLETE event in 250 ms;
                 // this is a terrible hack to make up for mediaserver not sending one
                 (new AMessage(kWhatSeekComplete, id()))->post(250000);
+				Parcel par;
+				mPlayer->setParameter(KEY_PARAMETER_AML_PLAYER_RESET_BUFFER,par);
+				/*reset player buffers. not find KEY_PARAMETER_AML_PLAYER_RESET_BUFFER?update framework/base/ ..av also*/
             } else if (OK != mPlayer->seekTo(timeMsec)) {
                 mStateFlags &= ~kFlagSeeking;
                 mSeekTimeMsec = ANDROID_UNKNOWN_TIME;
